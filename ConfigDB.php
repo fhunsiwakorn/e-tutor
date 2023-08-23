@@ -1,20 +1,5 @@
 <?php
-//ระบบ SDC EXAM
-// $servernameSystem = "127.0.0.1";
-// $usernameSystem = "root";
-// $passwordSystem = "cVAkB0E1kpN3SDcs";
-// $databaseSystem="tbl_examtest";
-// try {
-//     $connSystem = new PDO("mysql:host=$servernameSystem;dbname=$databaseSystem", $usernameSystem, $passwordSystem);
-//     // set the PDO error mode to exception
-//     $connSystem->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-//     $connSystem->exec("set names utf8");
-//     //echo "Connected successfully";
-//     }
-// catch(PDOException $eSystem)
-//     {
-//     echo "Connection failed: " . $eSystem->getMessage();
-//     }
+date_default_timezone_set('Asia/Bangkok');
 try {
     $mysql['host'] = 'localhost'; //database host
     $mysql['username'] = 'root'; //username ที่เชื่อมต่อฐานข้อมูล
