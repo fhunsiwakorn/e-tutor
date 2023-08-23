@@ -6,7 +6,7 @@ try {
     $mysql['database'] = 'etuter'; //ชื่อฐานข้อมูล
 
     $connSystem = new PDO(
-        "mysql:host=" . $mysql['host'] . "; dbname=" . $mysql['database'] . ";charset=utf8mb4;",
+        "mysql:host=" . $mysql['host'] . "; dbname=" . $mysql['database'] . ";charset=utf8mb4",
         $mysql['username'],
         $mysql['password'],
         // [PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"]
