@@ -56,7 +56,7 @@ VALUES (:user_name, :user_password,:user_password_2,:user_prefix,:user_firstname
 
       //  require_once('class.sms.php');
       echo "<script>";
-      echo "location.href = 'dashboard?option=student-data&success'";
+      echo "location.href = 'dashboard.php?option=student-data&success'";
       echo "</script>";
     } else {
       echo "<script>";
@@ -85,7 +85,7 @@ if (isset($_POST['DELuser_id'])) {
         )
       );
       echo "<script>";
-      echo "location.href = 'dashboard?option=student-data&success-d'";
+      echo "location.href = 'dashboard.php?option=student-data&success-d'";
       echo "</script>";
     }
   } catch (PDOException $e) {
@@ -202,7 +202,7 @@ $t11 = $sql_process->mf("XDO1JV9FXLAHK4BBG4XQ", $language_id);
                 } ?> type="button" class="btn btn-default" data-toggle="modal" data-target="#Addstudent">
           <img id="myImg" src="image_system/add_user.png" width="30" height="30">
         </button>
-        <button type="button" class="btn btn-default" onclick="window.location.href='dashboard?option=student-report-chart'" data-toggle="tooltip" title="<?= $t3 ?>">
+        <button type="button" class="btn btn-default" onclick="window.location.href='dashboard.php?option=student-report-chart'" data-toggle="tooltip" title="<?= $t3 ?>">
           <img id="myImg" src="image_system/bar-graph.ico" width="30" height="30">
         </button>
         <button type="button" class="btn btn-default" onclick="myFunction()" data-toggle="tooltip" title="<?= $t4 ?>">
@@ -217,7 +217,7 @@ $t11 = $sql_process->mf("XDO1JV9FXLAHK4BBG4XQ", $language_id);
         <div class="input-group">
           <input type="text" name="q" id="q" class="form-control" placeholder="<?= $t5 ?>..." onkeyup="showResult2(this.value);">
           <span class="input-group-btn">
-            <button type="button" name="search" id="search-btn" onclick="window.location.href='dashboard?option=student-data'" class="btn btn-flat"><i class="glyphicon glyphicon-refresh"></i>
+            <button type="button" name="search" id="search-btn" onclick="window.location.href='dashboard.php?option=student-data'" class="btn btn-flat"><i class="glyphicon glyphicon-refresh"></i>
             </button>
           </span>
         </div>
@@ -360,8 +360,8 @@ LIMIT $start, $rows
                     </td>
                     <td align="center">
                       <div class="btn-group-vertical">
-                        <button type="button" onclick="window.location.href='dashboard?option=student-edit&us=<?php echo $rowStu['user_id']; ?>'" data-toggle="tooltip" title="<?= $t10 ?> <?php echo  sprintf("%06d", $rowStu["user_id"]); ?>" class="btn btn-default"><img id="myImg" src="image_system/Edit.png" width="25" height="25"></button>
-                        <button type="button" onclick="window.location.href='dashboard?option=student-renew&us=<?php echo $rowStu['user_id']; ?>'" data-toggle="tooltip" title="<?= $t11 ?> <?php echo  sprintf("%06d", $rowStu["user_id"]); ?>" class="btn btn-default"> <img id="myImg" src="image_system/calendar_icon2.png" width="25" height="25"></button>
+                        <button type="button" onclick="window.location.href='dashboard.php?option=student-edit&us=<?php echo $rowStu['user_id']; ?>'" data-toggle="tooltip" title="<?= $t10 ?> <?php echo  sprintf("%06d", $rowStu["user_id"]); ?>" class="btn btn-default"><img id="myImg" src="image_system/Edit.png" width="25" height="25"></button>
+                        <button type="button" onclick="window.location.href='dashboard.php?option=student-renew&us=<?php echo $rowStu['user_id']; ?>'" data-toggle="tooltip" title="<?= $t11 ?> <?php echo  sprintf("%06d", $rowStu["user_id"]); ?>" class="btn btn-default"> <img id="myImg" src="image_system/calendar_icon2.png" width="25" height="25"></button>
                       </div>
                     </td>
                   </tr>
