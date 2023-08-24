@@ -1,29 +1,28 @@
 <?php
 date_default_timezone_set('Asia/Bangkok');
 
-	require_once('ConfigDB.php');
-	include ("ConfigName.php");
-	require_once("session.php");
-	require_once("class.user.php");
-	$auth_user = new USER();
-  require_once('function.php');
-  $sql_process = new msystem();
+require_once('ConfigDB.php');
+include("ConfigName.php");
+require_once("session.php");
+require_once("class.user.php");
+$auth_user = new USER();
+require_once('function.php');
+$sql_process = new msystem();
 
-	$user_id = $_SESSION['user_session'];
-  $user_status=$_SESSION['user_status'];
-  $school_id= $_SESSION['school_id'];
-	if($user_status != "2")
-	{
-		header("location:index");
-		exit();
-	}
-	$stmt = $auth_user->runQuery("SELECT user_name,user_prefix,user_firstname,user_lastname,user_tel,user_email,user_date,user_date_start,user_date_end,user_id_card,user_testing_date,user_code FROM user_member_group WHERE user_id=:user_id AND school_id=:school_id");
-	$stmt->execute(array(":user_id"=>$user_id,":school_id"=>$school_id));
-	$userRow=$stmt->fetch(PDO::FETCH_ASSOC);
-  $user_code=$userRow["user_code"];
+$user_id = $_SESSION['user_session'];
+$user_status = $_SESSION['user_status'];
+$school_id = $_SESSION['school_id'];
+if ($user_status != "2") {
+  header("location:index");
+  exit();
+}
+$stmt = $auth_user->runQuery("SELECT user_name,user_prefix,user_firstname,user_lastname,user_tel,user_email,user_date,user_date_start,user_date_end,user_id_card,user_testing_date,user_code FROM user_member_group WHERE user_id=:user_id AND school_id=:school_id");
+$stmt->execute(array(":user_id" => $user_id, ":school_id" => $school_id));
+$userRow = $stmt->fetch(PDO::FETCH_ASSOC);
+$user_code = $userRow["user_code"];
 
 
-  
+
 ///โรงเรียน
 $sct = $connSystem->prepare(
   "SELECT tbl_school.school_name,
@@ -44,38 +43,40 @@ $sct = $connSystem->prepare(
    
    WHERE
    tbl_school.language_id = tbl_exam_language.language_id AND
-   tbl_school.school_id = :school_id");
-  $sct->execute(array(':school_id'=>$school_id));
-  $rowSch = $sct->fetch(PDO::FETCH_ASSOC);
-  $name_school=$rowSch["school_name"];
-  $URL=$rowSch["school_path_url"];
-  $number_student=$rowSch["number_student"];
-  $v_program=$rowSch["v_program"];
-  $day_update=$rowSch["day_update"];
-  $compair_course=$rowSch["compair_course"];
-  $language_id=$rowSch["language_id"];
-  $language_name=$rowSch["language_name"];
-  $language_img=$rowSch["language_img"];
-  $school_fanpage=$rowSch["school_fanpage"];
-  $school_fanpage_text=$rowSch["school_fanpage_text"];
+   tbl_school.school_id = :school_id"
+);
+$sct->execute(array(':school_id' => $school_id));
+$rowSch = $sct->fetch(PDO::FETCH_ASSOC);
+$name_school = $rowSch["school_name"];
+$URL = $rowSch["school_path_url"];
+$number_student = $rowSch["number_student"];
+$v_program = $rowSch["v_program"];
+$day_update = $rowSch["day_update"];
+$compair_course = $rowSch["compair_course"];
+$language_id = $rowSch["language_id"];
+$language_name = $rowSch["language_name"];
+$language_img = $rowSch["language_img"];
+$school_fanpage = $rowSch["school_fanpage"];
+$school_fanpage_text = $rowSch["school_fanpage_text"];
 
 /////ตัดเวลา
-  if(!isset($_GET['cte'])) { 
-    unset($_SESSION['timeend']);
-// session_destroy(); 
-} 
+if (!isset($_GET['cte'])) {
+  unset($_SESSION['timeend']);
+  // session_destroy(); 
+}
 
-$theme_color="#3F2C73";
+$theme_color = "#3F2C73";
 
-    require_once('chek_student.php'); //ตรวจสอบหมดอายุการใช้งาน
+require_once('chek_student.php'); //ตรวจสอบหมดอายุการใช้งาน
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title><?=$name_program?> :: <?=$name_school?></title>
-	<link rel="shortcut icon"   type="image/png"  href="<?=$LOGO?>" />
+  <title><?= $name_program ?> :: <?= $name_school ?></title>
+  <link rel="shortcut icon" type="image/png" href="<?= $LOGO ?>" />
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -88,97 +89,103 @@ $theme_color="#3F2C73";
 
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
-       <link rel="stylesheet" href="AdminLTE-2.3.6/dist/css/skins/skin-green.min.css">
-       <link rel="stylesheet" href="AdminLTE-2.3.6/plugins/datatables/dataTables.bootstrap.css">
-       <link rel="stylesheet" href="AdminLTE-2.3.6/plugins/select2/select2.min.css">
-<link rel="stylesheet" href="AdminLTE-2.3.6/dist/css/AdminLTE.min.css">
-<link rel="stylesheet" href="AdminLTE-2.3.6/plugins/iCheck/square/blue.css">
+  <link rel="stylesheet" href="AdminLTE-2.3.6/dist/css/skins/skin-green.min.css">
+  <link rel="stylesheet" href="AdminLTE-2.3.6/plugins/datatables/dataTables.bootstrap.css">
+  <link rel="stylesheet" href="AdminLTE-2.3.6/plugins/select2/select2.min.css">
+  <link rel="stylesheet" href="AdminLTE-2.3.6/dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="AdminLTE-2.3.6/plugins/iCheck/square/blue.css">
   <!-- daterange picker -->
-<link rel="stylesheet" href="AdminLTE-2.3.6/plugins/daterangepicker/daterangepicker.css">
-<!-- bootstrap datepicker -->
-<link rel="stylesheet" href="AdminLTE-2.3.6/plugins/datepicker/datepicker3.css">
-<link rel="stylesheet" href="AdminLTE-2.3.6/dist/css/skins/skin-green.min.css">
-<script src="AdminLTE-2.3.6/plugins/select2/select2.full.min.js"></script>
-<script src="sweetalert_master/sweetalert.min.js"></script>
-<link rel="stylesheet" type="text/css" href="sweetalert_master/sweetalert.css">
-<link href="chkbox/checkboxes.css" rel="stylesheet">
+  <link rel="stylesheet" href="AdminLTE-2.3.6/plugins/daterangepicker/daterangepicker.css">
+  <!-- bootstrap datepicker -->
+  <link rel="stylesheet" href="AdminLTE-2.3.6/plugins/datepicker/datepicker3.css">
+  <link rel="stylesheet" href="AdminLTE-2.3.6/dist/css/skins/skin-green.min.css">
+  <script src="AdminLTE-2.3.6/plugins/select2/select2.full.min.js"></script>
+  <script src="sweetalert_master/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="sweetalert_master/sweetalert.css">
+  <link href="chkbox/checkboxes.css" rel="stylesheet">
 
-<link href="font/stylesheet.css" rel="stylesheet">
-			<style>
-            body {
-                font-family: 'js_saowaparknormal', sans-serif;
-                font-size: 20px;
-            }
-						h1 {
-                font-family: 'js_saowaparknormal', sans-serif;
-            }
-						h2 {
-                font-family: 'js_saowaparknormal', sans-serif;
-            }
-						h3 {
-                font-family: 'js_saowaparknormal', sans-serif;
-            }
-						h4 {
-                font-family: 'js_saowaparknormal', sans-serif;
-            }
-            h5 {
-                font-family: 'js_saowaparknormal', sans-serif;
-            }
-        </style>
+  <link href="font/stylesheet.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'js_saowaparknormal', sans-serif;
+      font-size: 20px;
+    }
 
-        <meta http-equiv="refresh" content="600">
-     
+    h1 {
+      font-family: 'js_saowaparknormal', sans-serif;
+    }
+
+    h2 {
+      font-family: 'js_saowaparknormal', sans-serif;
+    }
+
+    h3 {
+      font-family: 'js_saowaparknormal', sans-serif;
+    }
+
+    h4 {
+      font-family: 'js_saowaparknormal', sans-serif;
+    }
+
+    h5 {
+      font-family: 'js_saowaparknormal', sans-serif;
+    }
+  </style>
+
+  <meta http-equiv="refresh" content="600">
+
 
 
 </head>
 <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+
 <body class="hold-transition skin-green layout-top-nav">
 
 
 
 
-<!-- <div class="wrapper" > -->
-<div class="" >
+  <!-- <div class="wrapper" > -->
+  <div class="">
 
-  <header class="main-header">
+    <header class="main-header">
 
-    <nav class="navbar navbar-static-top" style="background-color:<?=$theme_color?>;">
-      <div class="container">
-        <div class="navbar-header">
-          <a href="sdc" class="navbar-brand"><b><?=$name_school?></b></a>
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
-            <i class="fa fa-bars"></i>
-          </button>
-        </div>
+      <nav class="navbar navbar-static-top" style="background-color:<?= $theme_color ?>;">
+        <div class="container">
+          <div class="navbar-header">
+            <a href="/" class="navbar-brand"><b><?= $name_school ?></b></a>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+              <i class="fa fa-bars"></i>
+            </button>
+          </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
-          <ul class="nav navbar-nav">
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+            <ul class="nav navbar-nav">
 
-            <?php include ("student_member_menu.php"); ?>
+              <?php include("student_member_menu.php"); ?>
 
-          </ul>
-          <!-- <form class="navbar-form navbar-left" role="search">
+            </ul>
+            <!-- <form class="navbar-form navbar-left" role="search">
             <div class="form-group">
               <input type="text" class="form-control" id="navbar-search-input" placeholder="Search">
             </div>
           </form> -->
-        </div>
+          </div>
 
 
-        <!-- /.navbar-collapse -->
-        <!-- Navbar Right Menu -->
-				<div class="navbar-custom-menu">
-					<ul class="nav navbar-nav">
-						<li class="dropdown user user-menu">
-					<?php include("accout_profile.php"); ?>
-					</li>
-					</ul>
-				</div>
-        <div class="navbar-custom-menu">
-          <ul class="nav navbar-nav">
-            <li class="dropdown user user-menu">
-							<!-- <script language="JavaScript" type="text/javascript">
+          <!-- /.navbar-collapse -->
+          <!-- Navbar Right Menu -->
+          <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+              <li class="dropdown user user-menu">
+                <?php include("accout_profile.php"); ?>
+              </li>
+            </ul>
+          </div>
+          <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+              <li class="dropdown user user-menu">
+                <!-- <script language="JavaScript" type="text/javascript">
 
 				function sivamtime() {
 				 now=new Date();
@@ -206,146 +213,150 @@ $theme_color="#3F2C73";
 
 				// -->
 
-				<!-- </script>  -->
+                <!-- </script>  -->
 
 
 
-			<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-			<span id="theTime"></span>
-		</a>
-          </li>
-          </ul>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <span id="theTime"></span>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <!-- /.navbar-custom-menu -->
         </div>
-        <!-- /.navbar-custom-menu -->
-      </div>
-      <!-- /.container-fluid -->
-    </nav>
-  </header>
-  <!-- Full Width Column -->
-  <div class="content-wrapper">
- 
-    <div class="">
-      <!-- Content Header (Page header) -->
-      <!-- <section class="content-header">
+        <!-- /.container-fluid -->
+      </nav>
+    </header>
+    <!-- Full Width Column -->
+    <div class="content-wrapper">
+
+      <div class="">
+        <!-- Content Header (Page header) -->
+        <!-- <section class="content-header">
         <h1>
-        <?=$name_program?>
-          <small><?=$name_school?></small>
+        <?= $name_program ?>
+          <small><?= $name_school ?></small>
         </h1>
         <ol class="breadcrumb">
    			 <i class="glyphicon glyphicon-flag"></i> <li class="active">
 		<?php $exRowsusertest = $connSystem->query("SELECT count(*) from exam_status_score WHERE user_id='$user_id'")->fetchColumn(); ?>
-					<a href="#" >คุณทำข้อสอบไปแล้วทั้งหมด <?=$exRowsusertest?>  ครั้ง</a></li>
+					<a href="#" >คุณทำข้อสอบไปแล้วทั้งหมด <?= $exRowsusertest ?>  ครั้ง</a></li>
 
    		 </ol>
       </section> -->
 
-      <!-- Main content -->
-      <section class="content">
+        <!-- Main content -->
+        <section class="content">
 
-        <?php
-		 $examstart='50';  //จำนวนข้อสอบที่ต้องทำ
-     if(!isset($_GET["option"])){
-     include ("student_member_page_1_home.php");
-     }else{
-     switch($_GET['option']) {
-     case "exam-main" : include ("student_member_page_2_exam_main.php");
-     break;
-		 case "history" : include ("student_member_page_6_history.php");
-		 break;
-		 case "chart-history" : include ("student_member_page_7_chart_report.php");
-		 break;
-		 case "profile" : include ("student_member_page_8_profile.php");
-		break;
-		 default : include ("student_member_page_1_home.php");
-     	}
-     }
+          <?php
+          $examstart = '50';  //จำนวนข้อสอบที่ต้องทำ
+          if (!isset($_GET["option"])) {
+            include("student_member_page_1_home.php");
+          } else {
+            switch ($_GET['option']) {
+              case "exam-main":
+                include("student_member_page_2_exam_main.php");
+                break;
+              case "history":
+                include("student_member_page_6_history.php");
+                break;
+              case "chart-history":
+                include("student_member_page_7_chart_report.php");
+                break;
+              case "profile":
+                include("student_member_page_8_profile.php");
+                break;
+              default:
+                include("student_member_page_1_home.php");
+            }
+          }
 
-     ?>
+          ?>
 
-        <!-- /.box -->
-      </section>
-      <!-- /.content -->
+          <!-- /.box -->
+        </section>
+        <!-- /.content -->
+      </div>
+      <!-- /.container -->
     </div>
-    <!-- /.container -->
+    <!-- /.content-wrapper -->
+
+
   </div>
-  <!-- /.content-wrapper -->
-  
-  
-</div>
-<!-- ./wrapper -->
-<?php
-// close connection
-$connSystem = null;
-?>
-<!-- jQuery 2.2.3 -->
+  <!-- ./wrapper -->
+  <?php
+  // close connection
+  $connSystem = null;
+  ?>
+  <!-- jQuery 2.2.3 -->
 
-<script src="AdminLTE-2.3.6/plugins/jQuery/jquery-2.2.3.min.js"></script>
+  <script src="AdminLTE-2.3.6/plugins/jQuery/jquery-2.2.3.min.js"></script>
 
-<!-- Bootstrap 3.3.6 -->
-<script src="AdminLTE-2.3.6/bootstrap/js/bootstrap.min.js"></script>
-<!-- AdminLTE App -->
-<script src="AdminLTE-2.3.6/dist/js/app.min.js"></script>
-<script src="AdminLTE-2.3.6/plugins/select2/select2.full.min.js"></script>
-<script src="AdminLTE-2.3.6/plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="AdminLTE-2.3.6/plugins/datatables/dataTables.bootstrap.min.js"></script>
-<!-- iCheck -->
-<script src="AdminLTE-2.3.6/plugins/iCheck/icheck.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+  <!-- Bootstrap 3.3.6 -->
+  <script src="AdminLTE-2.3.6/bootstrap/js/bootstrap.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="AdminLTE-2.3.6/dist/js/app.min.js"></script>
+  <script src="AdminLTE-2.3.6/plugins/select2/select2.full.min.js"></script>
+  <script src="AdminLTE-2.3.6/plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="AdminLTE-2.3.6/plugins/datatables/dataTables.bootstrap.min.js"></script>
+  <!-- iCheck -->
+  <script src="AdminLTE-2.3.6/plugins/iCheck/icheck.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
 
 
-<script src="AdminLTE-2.3.6/plugins/input-mask/jquery.inputmask.js"></script>
-<script src="AdminLTE-2.3.6/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
-<script src="AdminLTE-2.3.6/plugins/input-mask/jquery.inputmask.extensions.js"></script>
+  <script src="AdminLTE-2.3.6/plugins/input-mask/jquery.inputmask.js"></script>
+  <script src="AdminLTE-2.3.6/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+  <script src="AdminLTE-2.3.6/plugins/input-mask/jquery.inputmask.extensions.js"></script>
 
 
-     <!-- page script -->
-     
-     <script>
-      $(document).ready(function(){
+  <!-- page script -->
+
+  <script>
+    $(document).ready(function() {
       $("#popfanpage").modal('show');
-     }
-     )
+    })
 
-     $(document).ready(function(){
+    $(document).ready(function() {
       $("#Show_Score").modal('show');
-     }
-     )
+    })
 
-     $(document).ready(function(){
+    $(document).ready(function() {
       // $("#recommend").modal('show');
-      $("#recommend").modal({backdrop: "static"});
-     }
-     )
+      $("#recommend").modal({
+        backdrop: "static"
+      });
+    })
 
-     $(document).ready(function(){
+    $(document).ready(function() {
       // $("#recommend").modal('show');
-      $("#navigate").modal({backdrop: "static"});
-     }
-     )
+      $("#navigate").modal({
+        backdrop: "static"
+      });
+    })
 
-       $(function () {
-    
+    $(function() {
+
       $(".select2").select2();
       $("#example1").DataTable();
-     	$("#example2").DataTable();
-     	$("#example3").DataTable();
+      $("#example2").DataTable();
+      $("#example3").DataTable();
       $("#example4").DataTable();
-			$('#example5').DataTable({
-				"paging": true,
-				"lengthChange": false,
-				"searching": false,
-				"ordering": false,
-				"info": true,
-				"autoWidth": false
-				 });
-$("[data-mask]").inputmask();
- });
-
-
-     </script>
+      $('#example5').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": false,
+        "ordering": false,
+        "info": true,
+        "autoWidth": false
+      });
+      $("[data-mask]").inputmask();
+    });
+  </script>
 
 
 
 
 </body>
+
 </html>
