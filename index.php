@@ -10,9 +10,9 @@ if (isset($_POST['btn-login'])) {
 
 	if ($login->doLogin($uname, $umail, $upass)) {
 		if ($_SESSION['user_status'] == '1') {   ///ถ้าสำหรับเจ้าหน้าที่
-			$login->redirect('dashboard');
+			$login->redirect('dashboard.php');
 		} elseif ($_SESSION['user_status'] == '2') {  ///ถ้าสำหรับนักเรียน
-			$login->redirect('sdc?pop');
+			$login->redirect('student_member.php?pop');
 		}
 	} else {
 		$error = "Wrong Details !";
