@@ -191,7 +191,8 @@ class USER
 
 	public function redirect($url)
 	{
-		header("Location: $url");
+		// header("Location: $url");
+		die('<script type="text/javascript">window.location=\'' . $url . '\';</script‌​>');
 	}
 
 	public function doLogout()
