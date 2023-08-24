@@ -1,13 +1,11 @@
 
 <?php
-
-///ระบบ SDC EXAM
 class Database
 {
     private $host = "localhost";
     private $db_name = "etuter";
     private $username = "root";
-    private $password = "";
+    private $password = "@P@SS.W0rd";
     public $conn;
 
     public function dbConnection()
