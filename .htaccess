@@ -1,0 +1,8 @@
+RewriteEngine On
+RewriteRule ^index$    index.php  [L]
+RewriteRule ^dashboard$    dashboard.php  [L]
+RewriteRule ^sdc$    student_member.php  [L]
+RewriteRule ^report-excel$    dashboard_page_8_report_excel.php  [L]
+RewriteRule ^report-word$    dashboard_page_9_report_word.php  [L]
+RewriteRule ^report-print$    dashboard_page_10_report_print.php  [L]
+RewriteRule ^demo$    demo.html  [L]
